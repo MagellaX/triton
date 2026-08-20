@@ -12,9 +12,9 @@ permissions: read-all
 jobs:
 
   Build-Wheels:
-    # Forks may build artifacts on pull requests or by explicit dispatch, but
-    # must not run the upstream nightly publication schedule.
-    if: ${{ github.event_name != 'schedule' || github.repository == 'triton-lang/triton' }}
+    # Forks build these expensive artifacts only by explicit dispatch. Upstream
+    # retains its pull-request and nightly behavior.
+    if: ${{ github.repository == 'triton-lang/triton' || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 180
     runs-on: ${{ matrix.config.runs_on }}
 
